@@ -1,0 +1,22 @@
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+#security:
+  #require-ssl: true
+#server:
+  #ssl:
+    # The format used for the keystore. It could be set to JKS in case it is a JKS file
+    #key-store-type: PKCS12
+    # The path to the keystore containing the certificate
+    #key-store: classpath:keystore/securitydemo.p12
+    # The password used to generate the certificate
+    #key-store-password: 123456
+    # The alias mapped to the certificate
+    #key-alias: securitydemo
