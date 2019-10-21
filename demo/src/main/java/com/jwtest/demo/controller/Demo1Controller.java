@@ -4,6 +4,7 @@ import com.jwtest.demo.dao.AccountService;
 import com.jwtest.demo.dao.ClientsService;
 import com.jwtest.demo.dto.AccountDto;
 import com.jwtest.demo.dto.ClientDto;
+import com.jwtest.demo.dto.TransferDto;
 import com.jwtest.demo.model.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostFilter;
@@ -37,15 +38,14 @@ public class Demo1Controller {
     @RequestMapping(value = "/accounts/{accountNumber}", method = RequestMethod.GET, produces = "application/json")
     @PreAuthorize("hasRole('USER')")
     public AccountDto getAccount(@PathVariable String accountNumber) {
-
+        return accountService.getAccountForNumber(accountNumber, getLoggedUsername());
     }
 
-    @RequestMapping(value = "/account/{accountNumber}/transfer", method = RequestMethod.POST)
-    @PreAuthorize("hasRole('USER') or oauth2.hasScope('write')")
-    public void addMoney(@RequestParam(name = "amount", required = true) int amount,
-                         @RequestParam(name = "targetAccount", required = true) String targetAccount,
+    @RequestMapping(value = "/accounts/{accountNumber}/transfer", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('USER') and (not #oauth2.isOAuth() or #oauth2.hasScope('write'))")
+    public void addMoney(@RequestBody TransferDto transferDto,
                          @PathVariable String accountNumber) {
-        accountService.transferMoney(amount, accountNumber, targetAccount, getLoggedUsername());
+        accountService.transferMoney(transferDto, accountNumber, getLoggedUsername());
     }
 
     @RequestMapping(value = "/clients", method = RequestMethod.GET)

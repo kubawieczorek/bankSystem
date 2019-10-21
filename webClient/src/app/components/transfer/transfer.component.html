@@ -1,0 +1,15 @@
+<ng-container *ngIf="account$| async; let account">
+  <h4>Source account</h4>
+  <p mat-line>Number: {{account?.number}}</p>
+  <p mat-line>Money: {{account?.money}} PLN</p>
+  <h4>Target account</h4>
+  <div class="example-container">
+    <mat-form-field>
+      <input matInput placeholder="Target account number" [(ngModel)]="targetNumber">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Money [PLN]" [(ngModel)]="moneyToTransfer">
+    </mat-form-field>
+  </div>
+  <button mat-raised-button (click)="onTransfer()">Transfer</button>
+</ng-container>

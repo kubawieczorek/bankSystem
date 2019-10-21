@@ -1,0 +1,13 @@
+<div class="container">
+  <h3>Basic Authentication</h3>
+  <div>
+    Username : <input type="text" name="username" [(ngModel)]="username">
+    Password : <input type="password" name="password" [(ngModel)]="password">
+  </div>
+  <button (click)=checkLogin() class="btn btn-success">
+    Login
+  </button>
+  <div [hidden]="!invalidLogin" style="color: red">
+    Incorrect login or password!
+  </div>
+</div>

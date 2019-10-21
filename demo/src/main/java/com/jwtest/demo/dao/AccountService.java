@@ -1,6 +1,7 @@
 package com.jwtest.demo.dao;
 
 import com.jwtest.demo.dto.AccountDto;
+import com.jwtest.demo.dto.TransferDto;
 import com.jwtest.demo.exceptions.ForbiddenActionException;
 import com.jwtest.demo.exceptions.IncorrectOperation;
 import com.jwtest.demo.exceptions.ResourceNotFound;
@@ -33,23 +34,23 @@ public class AccountService {
     }
 
     @Transactional
-    public void transferMoney(int moneyToAdd, String accountNumberFrom, String accountNumberTo, String clientName) {
+    public void transferMoney(TransferDto transferDto, String accountNumberFrom, String clientName) {
         Optional<Account> accountFromOpt = accountRepository.findAccountByNumber(accountNumberFrom);
         if (accountFromOpt.isPresent()) {
             Account accountFrom = accountFromOpt.get();
-            if (moneyToAdd > accountFrom.getMoney()) {
+            if (transferDto.getMoney() > accountFrom.getMoney()) {
                 throw new IncorrectOperation();
             }
             if (!accountFrom.getClient().getName().equals(clientName)) {
                 throw new ForbiddenActionException();
             }
-            Optional<Account> accountToOpt = accountRepository.findAccountByNumber(accountNumberTo);
+            Optional<Account> accountToOpt = accountRepository.findAccountByNumber(transferDto.getTargetAccountNumber());
             if (!accountToOpt.isPresent()) {
                 throw new IncorrectOperation();
             }
             Account accountTo = accountToOpt.get();
-            accountTo.setMoney(accountTo.getMoney() + moneyToAdd);
-            accountFrom.setMoney(accountFrom.getMoney() - moneyToAdd);
+            accountTo.setMoney(accountTo.getMoney() + transferDto.getMoney());
+            accountFrom.setMoney(accountFrom.getMoney() - transferDto.getMoney());
         }
     }
 
