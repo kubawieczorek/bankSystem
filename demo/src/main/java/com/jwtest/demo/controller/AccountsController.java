@@ -1,11 +1,8 @@
 package com.jwtest.demo.controller;
 
 import com.jwtest.demo.dao.AccountService;
-import com.jwtest.demo.dao.ClientsService;
 import com.jwtest.demo.dto.AccountDto;
-import com.jwtest.demo.dto.ClientDto;
 import com.jwtest.demo.dto.TransferDto;
-import com.jwtest.demo.model.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,62 +10,36 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
-public class Demo1Controller {
+@RequestMapping("/accounts")
+public class AccountsController {
 
     private final AccountService accountService;
-    private final ClientsService clientsService;
 
     @Autowired
-    public Demo1Controller(AccountService accountService, ClientsService clientsService) {
+    public AccountsController(AccountService accountService) {
         this.accountService = accountService;
-        this.clientsService = clientsService;
     }
 
-    @RequestMapping(value = "/accounts", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     @PostFilter("hasRole('ADMIN') or filterObject.clientName == authentication.name")
     public List<AccountDto> getAccounts() {
         return accountService.getAccounts();
     }
 
-    @RequestMapping(value = "/accounts/{accountNumber}", method = RequestMethod.GET, produces = "application/json")
-    @PreAuthorize("hasRole('USER')")
+    @RequestMapping(value = "/{accountNumber}", method = RequestMethod.GET, produces = "application/json")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public AccountDto getAccount(@PathVariable String accountNumber) {
         return accountService.getAccountForNumber(accountNumber, getLoggedUsername());
     }
 
-    @RequestMapping(value = "/accounts/{accountNumber}/transfer", method = RequestMethod.POST)
+    @RequestMapping(value = "/{accountNumber}/transfer", method = RequestMethod.POST)
     @PreAuthorize("hasRole('USER') and (not #oauth2.isOAuth() or #oauth2.hasScope('write'))")
     public void addMoney(@RequestBody TransferDto transferDto,
                          @PathVariable String accountNumber) {
         accountService.transferMoney(transferDto, accountNumber, getLoggedUsername());
-    }
-
-    @RequestMapping(value = "/clients", method = RequestMethod.GET)
-    @PostFilter("hasRole('ADMIN') or filterObject.name == authentication.name")
-    public List<Client> getClients() {
-        return clientsService.getAllClients();
-    }
-
-    @RequestMapping(value = "/client/registration", method = RequestMethod.POST, consumes = "application/json")
-    public void registerUserAccount(@RequestBody ClientDto accountDto) {
-        clientsService.registerNewClientAccount(accountDto);
-    }
-
-    @RequestMapping(value = "/myAccount/client", method = RequestMethod.GET, produces = "application/json")
-    public Map<String, String> getClient() {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("name", getLoggedUsername());
-        return map;
-    }
-
-    @RequestMapping(value = "/greeting", method = RequestMethod.GET, produces = "application/json")
-    public Object greeting() {
-        return "Hello!";
     }
 
     private String getLoggedUsername() {

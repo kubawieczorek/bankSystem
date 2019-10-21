@@ -1,4 +1,4 @@
-package com.jwtest.demo.configuration.oauth2.multipleFlows;
+package com.jwtest.demo.configuration.oauth2;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

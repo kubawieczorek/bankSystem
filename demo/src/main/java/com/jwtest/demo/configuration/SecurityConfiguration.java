@@ -17,8 +17,6 @@ import javax.sql.DataSource;
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true) // needed?
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    //@Autowired
-    //private MyBasicAuthenticationEntryPoint authenticationEntryPoint;
 
     @Autowired
     private DataSource dataSource;
@@ -57,16 +55,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2-console/**").permitAll()// For H2 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
-        // A custom AuthenticationEntryPoint can be used to set necessary response headers,
-        // content-type, and so on before sending the response back to the client.
-        // .authenticationEntryPoint(authenticationEntryPoint);
 
         //For H2 and Angular
         http.csrf().disable();
         http.headers().frameOptions().disable();
-
-        //Sometimes it's necessary to implement new functionality with create a new filter to use in the chain.
-        //http.addFilterAfter(new CustomFilter(), BasicAuthenticationFilter.class);
     }
 
     @Bean
