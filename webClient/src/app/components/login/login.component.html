@@ -1,13 +1,25 @@
-<div class="container">
-  <h3>Basic Authentication</h3>
-  <div>
-    Username : <input type="text" name="username" [(ngModel)]="username">
-    Password : <input type="password" name="password" [(ngModel)]="password">
-  </div>
-  <button (click)=checkLogin() class="btn btn-success">
-    Login
-  </button>
-  <div [hidden]="!invalidLogin" style="color: red">
-    Incorrect login or password!
-  </div>
+<div class="signin-content">
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <p>{{title}}</p>
+        <mat-form-field class="full-width-input">
+          <input matInput placeholder="User" formControlName="userName" required>
+          <mat-error *ngIf="isFieldInvalid('userName')">
+            Please fill your user name
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width-input">
+          <input matInput type="password" placeholder="Password" formControlName="password"  required>
+          <mat-error *ngIf="isFieldInvalid('userName')">
+            Please fill your password
+          </mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary">Login</button>
+      </form>
+      <div [hidden]="!invalidLogin" style="color: red">
+        Incorrect login or password!
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>

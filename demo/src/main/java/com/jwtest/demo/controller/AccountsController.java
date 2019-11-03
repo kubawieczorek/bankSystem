@@ -37,7 +37,7 @@ public class AccountsController {
 
     @RequestMapping(value = "/{accountNumber}/transfer", method = RequestMethod.POST)
     @PreAuthorize("hasRole('USER') and (not #oauth2.isOAuth() or #oauth2.hasScope('write'))")
-    public void addMoney(@RequestBody TransferDto transferDto,
+    public void transfer(@RequestBody TransferDto transferDto,
                          @PathVariable String accountNumber) {
         accountService.transferMoney(transferDto, accountNumber, getLoggedUsername());
     }

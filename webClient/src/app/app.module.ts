@@ -7,17 +7,18 @@ import { ClientListComponent } from './components/client-list/client-list.compon
 import {ClientService} from './service/client.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BasicAuthHttpInterceptorService} from './service/basic-auth-http-interceptor.service';
 import { AccountsComponent } from './components/account/accounts.component';
 import { OauthLoginComponent } from './components/oauth-login/oauth-login.component';
 import { CookieService } from 'ngx-cookie-service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatNativeDateModule} from '@angular/material/core';
-import {MatIconModule, MatListModule, MatTableModule} from '@angular/material';
+import {MatCardModule, MatIconModule, MatListModule, MatTableModule} from '@angular/material';
 import { TransferComponent } from './components/transfer/transfer.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material';
+import { BasicLoginComponent } from './components/basic-login/basic-login.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {MatInputModule} from '@angular/material';
     LoginComponent,
     AccountsComponent,
     OauthLoginComponent,
-    TransferComponent
+    TransferComponent,
+    BasicLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,9 @@ import {MatInputModule} from '@angular/material';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatTableModule
+    MatTableModule,
+    MatCardModule,
+    ReactiveFormsModule
   ],
   providers: [ClientService, CookieService, { provide: HTTP_INTERCEPTORS, useClass: BasicAuthHttpInterceptorService, multi: true}],
   bootstrap: [AppComponent]

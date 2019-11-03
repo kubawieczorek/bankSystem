@@ -6,6 +6,7 @@ import com.jwtest.demo.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,17 +37,13 @@ public class DemoUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException(
                     "No user found with username: " + username);
         }
-        boolean enabled = true;
-        boolean accountNonExpired = true;
-        boolean credentialsNonExpired = true;
-        boolean accountNonLocked = true;
-        return new org.springframework.security.core.userdetails.User(
+        return new User(
                 user.get().getName(),
                 user.get().getPassword(),
-                enabled,
-                accountNonExpired,
-                credentialsNonExpired,
-                accountNonLocked,
+                true,
+                true,
+                true,
+                true,
                 getAuthorities(user.get().getRoles()));
     }
 

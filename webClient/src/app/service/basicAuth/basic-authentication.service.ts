@@ -17,7 +17,7 @@ export class BasicAuthenticationService {
     console.log(username);
     console.log(password);
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(username + ':' + password)});
-    return this.httpClient.get('http://localhost:8080/clients', {headers}).pipe(
+    return this.httpClient.get('http://localhost:8080/myAccount/client', {headers}).pipe(
       map(
         userData => {
           console.log(userData);

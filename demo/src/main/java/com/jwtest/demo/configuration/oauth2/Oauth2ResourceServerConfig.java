@@ -16,9 +16,8 @@ public class Oauth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
     public void configure(HttpSecurity http) throws Exception {
         http.requestMatchers()
                 .antMatchers("/clients")
-                .antMatchers("/admin")
-                .antMatchers("/myAccount/money")
-                //What if I add different URL in authorize requests? Will it be ignored?
+                .antMatchers("/accounts")
+                .antMatchers("/myAccount/*")
                 .and()
                 .requestMatcher(new Oauth2ResourceServerConfig.BasicRequestMatcher())
                 .authorizeRequests()

@@ -8,28 +8,6 @@ import {Router} from '@angular/router';
   styleUrls: ['./oauth-login.component.css']
 })
 export class OauthLoginComponent implements OnInit {
-  username = '';
-  password = '';
-  invalidLogin = false;
-
-  constructor(private router: Router,
-              private service: AuthenticationOauthService) {
-  }
-
-  checkLogin() {
-    this.service.obtainAccessToken(this.username, this.password)
-      .subscribe(
-        data => {
-          this.router.navigate(['']);
-          this.invalidLogin = false;
-        },
-        error => {
-          this.invalidLogin = true;
-        }
-      );
-  }
-
   ngOnInit(): void {
   }
-
 }

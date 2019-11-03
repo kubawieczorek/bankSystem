@@ -26,7 +26,7 @@ public class Oauth2AuthServerConfig extends AuthorizationServerConfigurerAdapter
 
     @Autowired
     @Qualifier("authenticationManagerBean")
-    private AuthenticationManager authenticationManager;//Why needed in password flow?
+    private AuthenticationManager authenticationManager;
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
@@ -41,8 +41,7 @@ public class Oauth2AuthServerConfig extends AuthorizationServerConfigurerAdapter
                 .inMemory()
                 .withClient("clientId")
                 .secret(encoder.encode("clientSecret"))
-                .redirectUris("http://localhost:8080/greeting")
-                .authorizedGrantTypes("password", "client_credentials", "authorization_code")
+                .authorizedGrantTypes("password")
                 .accessTokenValiditySeconds(3600)
                 .refreshTokenValiditySeconds(28 * 24 * 3600)
                 .scopes("read");
