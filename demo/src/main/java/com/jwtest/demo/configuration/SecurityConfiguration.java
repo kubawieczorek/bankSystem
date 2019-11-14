@@ -49,7 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.addFilterBefore(new CustomFilter(), BasicAuthenticationFilter.class);
 
-        //For H2 and Angular
+        //Dev only
         http.csrf().disable();
         http.headers().frameOptions().disable();
     }

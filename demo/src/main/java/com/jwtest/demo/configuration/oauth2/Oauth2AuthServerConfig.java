@@ -21,12 +21,15 @@ import javax.sql.DataSource;
 @EnableAuthorizationServer
 public class Oauth2AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    @Autowired
-    DataSource dataSource;
+    private final DataSource dataSource;
+
+    private final AuthenticationManager authenticationManager;
 
     @Autowired
-    @Qualifier("authenticationManagerBean")
-    private AuthenticationManager authenticationManager;
+    public Oauth2AuthServerConfig(DataSource dataSource, @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager) {
+        this.dataSource = dataSource;
+        this.authenticationManager = authenticationManager;
+    }
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
