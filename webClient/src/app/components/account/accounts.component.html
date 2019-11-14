@@ -1,22 +1,7 @@
-<!--<mat-list *ngFor="let account of (accounts$ | async); let i = index">
-  <h3 mat-subheader>#{{i + 1}} {{account.type}}</h3>
-  <mat-list-item>
-    <h4 mat-line>{{account.money}} $</h4>
-    <p mat-line> Created: {{account.dateCreated | date}} </p>
-    <p mat-line> Owner: {{account.clientName}} </p>
-  </mat-list-item>
-  <a routerLink="/{{account.number}}/transfer">
-    <button mat-icon-button aria-label="Transfer">
-      <mat-icon>transform</mat-icon>
-    </button>
-  </a>
-  <mat-divider></mat-divider>
-</mat-list>-->
-
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
   <ng-container matColumnDef="number">
-    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <th mat-header-cell *matHeaderCellDef>Number</th>
     <td mat-cell *matCellDef="let element"> {{element.number}} </td>
   </ng-container>
 
@@ -37,7 +22,7 @@
 
   <ng-container matColumnDef="dateCreated">
     <th mat-header-cell *matHeaderCellDef>Date Created</th>
-    <td mat-cell *matCellDef="let element"> {{element.dateCreated}} </td>
+    <td mat-cell *matCellDef="let element"> {{ element.dateCreated | date }}</td>
   </ng-container>
 
   <ng-container matColumnDef="transfer">
