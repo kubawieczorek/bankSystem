@@ -1,6 +1,7 @@
 package com.jwtest.demo.configuration;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
@@ -11,6 +12,7 @@ import java.io.IOException;
 
 @Configuration
 @Order(Ordered.HIGHEST_PRECEDENCE)
+@Profile("secure")
 public class CorsFilter implements Filter {
 
     @Override
